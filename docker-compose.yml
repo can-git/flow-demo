@@ -1,0 +1,15 @@
+version: '3'
+services:
+
+    # = MongoDB ======================================================
+
+  pcr-covid19-mongo:
+    container_name: flow-demo-mongo
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: a532h456
+    ports:
+      - 27017:27017
+
+    # ================================================================
