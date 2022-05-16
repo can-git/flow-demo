@@ -1,15 +1,16 @@
 package com.example.flowdemo.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.flowdemo.domain.ProcessableEntity;
+import lombok.*;
 
 import java.math.BigInteger;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Flow{
+@EqualsAndHashCode(callSuper = true)
+public class Flow extends ProcessableEntity {
+    private String token;
     private long value;
     private int count;
 }

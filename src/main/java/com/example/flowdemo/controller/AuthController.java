@@ -5,6 +5,7 @@ import com.example.flowdemo.services.AuthService;
 import com.example.flowdemo.services.CustomUserDetailsService;
 import com.example.flowdemo.services.JwtUtil;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthController {
 
     @Autowired
@@ -26,8 +27,6 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private CustomUserDetailsService userDetailsService;
-//    @Autowired
-//    private AuthService authService;
 
     @PostMapping("/login")
     public String createToken(@RequestBody AuthRequest authRequest) throws Exception {
@@ -49,12 +48,4 @@ public class AuthController {
 
         return jwtUtil.generateToken(userDetails);
     }
-
-//    @GetMapping("/createUsers")
-//    public ResponseEntity<?> createUser() throws Exception{
-//        return ResponseEntity.ok(
-//                authService.createAll()
-//        );
-//    }
-
 }
