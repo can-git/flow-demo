@@ -1,4 +1,4 @@
-package com.example.flowdemo.payload.response;
+package com.example.flowdemo.payload.response.Flow;
 
 import com.example.flowdemo.domain.EntityDetails;
 import com.example.flowdemo.models.Flow;

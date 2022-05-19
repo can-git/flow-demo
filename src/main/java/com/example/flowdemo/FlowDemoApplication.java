@@ -13,22 +13,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 @SpringBootApplication
-@CrossOrigin("http://localhost:4200")
 public class FlowDemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FlowDemoApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer(){
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/*").allowedHeaders("*")
-						.allowedOrigins("*")
-						.allowedMethods("*");
-			}
-		};
-	}
 }

@@ -1,48 +1,39 @@
 package com.example.flowdemo.services;
 
 
+import com.example.flowdemo.Repository.AccountRepository;
+import com.example.flowdemo.models.Account;
+import com.example.flowdemo.payload.requests.Auth.SignUpRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-//    @Autowired
-//    private UserRepository userRepository;
-
-    final private Map<String, User> users = Map.of(
-            "can", new User("can", "123", new ArrayList<>()),
-            "tugce", new User("tugce", "456", new ArrayList<>())
-    );
-
-    public User getUserByUsername(String username){
-        return users.get(username);
-//        return userRepository.findByUserName(username);
+    private final PasswordEncoder passwordEncoder;
+    private final AccountRepository accountRepository;
+    public boolean getUserByUsername(String username){
+        return accountRepository.existsByUsername(username);
     }
 
-//    public List<User> createAll(){
-//
-////        CreateUserRequest user1 = new CreateUserRequest();
-////        user1.setId("1");
-////        user1.setUsername("can");
-////        user1.setPassword("123");
-////
-////        CreateUserRequest user2 = new CreateUserRequest();
-////        user2.setId("2");
-////        user2.setUsername("tugce");
-////        user2.setPassword("456");
-////
-////        final List<CreateUserResponse> userResponseList = new ArrayList<>();
-////        CreateUserResponse userResponse1 = new CreateUserResponse();
-////        userResponse1.accept(user1.get());
-////        CreateUserResponse userResponse2 = new CreateUserResponse();
-////        userResponse2.accept(user2.get());
-////        userResponseList.add(userResponse1);
-////        userResponseList.add(userResponse2);
-//
-//
-//        return userRepository.saveAll(userResponseList);
-//    }
+    public Account create(SignUpRequest request) {
+        if (accountRepository.existsByUsername(request.getUsername()))
+            throw new BadCredentialsException("Username already exists");
+        return accountRepository.insert(
+                Account.builder()
+                        .creationDate(System.currentTimeMillis())
+                        .username(request.getUsername())
+                        .password(passwordEncoder.encode(request.getPassword()))
+                        .roles(List.of("ROLE_USER"))
+                        .disabled(false)
+                        .build()
+        );
+    }
 }

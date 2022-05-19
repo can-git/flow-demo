@@ -1,4 +1,4 @@
-package com.example.flowdemo.payload.response;
+package com.example.flowdemo.payload.response.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
